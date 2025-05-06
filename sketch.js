@@ -158,8 +158,8 @@ let level2 = {
 
 function preload() {
   // Load your custom images
-  chestSprite = loadImage('.png'); 
-  tombSprite = loadImage('.png');   
+  chestSprite = loadImage('IMGS/ chest.png'); 
+  tombSprite = loadImage('IMGS/ tomb2.png');   
 
   // Tilemap imgs
   textures[0] = loadImage('.png'); 
@@ -170,9 +170,9 @@ function preload() {
   textures[5] = loadImage('.png'); 
 
   // Player sprite
-  playerSprite = loadImage('.png'); 
+  playerSprite = loadImage('IMGS/ character.png'); 
 
-  enemySprite = loadImage('.png'); 
+  enemySprite = loadImage('IMGS/ bishop.png'); 
 
 }
 
