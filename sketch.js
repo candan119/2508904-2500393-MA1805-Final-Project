@@ -296,7 +296,7 @@ function transitionToNextLevel() {
 function showMenu(){
     fill(255);
     textSize (64);
-    text ("NOT Tomb Raider", width / 2, 500);
+    text ("Under the Tomb", width / 2, 500);
 
     textSize (24);
     text ("Press 'x' to Start", width / 2, 549);

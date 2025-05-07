@@ -1,33 +1,51 @@
 #README file
 
 
-PROJECT NAME: Tomb Raider
+PROJECT NAME: Under the Tomb
 
 BY Alya and Candan
 MEMBERS: Alya Alshmlany 2508904
-        Candan Savk 250393
+         Candan Savk 2500393
 
 LINK TO GITHUB REPO: https://github.com/candan119/2508904-2500393-MA1805-Final-Project.git 
 LINK TO GITHUB PAGES: https://candan119.github.io/2508904-2500393-MA1805-Final-Project/ 
 
 OVERVIEW OF PROJECT
-Basically this game is a basic understandning of our workshops put in into practice by our creation of games as levels. This is a 2D "Tomb Raider"-inspired action-adventure game focused on fast-paced escape challenges. Players navigate maze-like temple levels while dodging hazards like patrolling enemies, lasers, and falling boulders. The game starts with a dramatic treasure chest interaction that triggers a temple collapse, launching the player into a series of timed escape levels. Key technical features include a tile-based maze system, AI enemies with basic pathing, environmental traps, and a scoring system based on treasure collected. The game's aesthetics draw from ancient ruins, with themes of urgency, danger, and treasure hunting.
+This game is a tile-based 2D action-adventure project built using JavaScript and the p5.js library. It represents a practical application of concepts learned during our workshops, culminating in the creation of a small but complete game with multiple levels, interactive gameplay, and a narrative structure. Drawing inspiration from classic titles like Tomb Raider, the game focuses on fast-paced escape challenges within maze-like, ancient temple environments.
+
+Players take on the role of an adventurer exploring mysterious ruins in search of treasure. The game opens with a dramatic chest interaction that triggers the collapse of the temple, sending the player into a frantic escape sequence. Players must navigate through trap-laden levels filled with patrolling enemies, lasers, and falling boulders while collecting treasure and racing against time.
+
+The game uses a tile-based system to render levels and manage movement, with each tile defined by a visual (graphicsMap) and logical (tileRules) layer. Levels are defined as objects and loaded sequentially, with increasing difficulty and complexity. Key features include:
+
+i. Player movement based on tile coordinates, with restrictions based on walkable paths.
+
+ii. Enemy AI with simple patrol behavior to create tension and obstacles.
+
+iii. Interactive objects like chests, tombs, and statues, which trigger in-game events or dialogue.
+
+iv. Environmental hazards, such as traps and timed challenges.
+
+v. Scripted dialogue to deliver narrative and progression cues.
+
+vi. Scoring system based on treasure collected during gameplay.
 
 INDIVIDUAL CONTRIBUTION
 
-Alya: She generally made most of the coding. She created the levels and the core coding for the characters movements or the so called villians. She also made the background designs. She used the tilemaps method that was mainly thaught at the end of the term as her center codes for the game. The game based on that code and got upgraded within the making. She went into research in new terrortories as well as stuff that has been thought through out the lecture which made her gain new knowledge about code and improve herself in code based game making. They both brainstormed and developed the games basic idea and structure.  
+Alya: 
+She was primarily responsible for the majority of the coding, developing the core systems that handled character movement, enemy behavior, and environmental interactions. Using a tilemap-based method—introduced later in the term—she built the foundation for the game's structure, enabling dynamic level creation through arrays. She also designed the background visuals and implemented key functions for managing game states, frame updates, and timed events. Her process combined knowledge from lectures with independent research, allowing her to expand her understanding of coding and improve her skills in game development. The initial concept and structure of the game were collaboratively brainstormed and developed.
 
-Candan: She made all the props and character designs. She has not directly made most of the code for the game yet she analyized the code through out the writing proccess and clear out any errors that has been made through out the proccess. She generally did the writing and explanation sides of the code such as the read me file. These has made her get more familiar with the actual code that was written way better. They both brainstormed and developed the games basic idea and structure.   
+Candan: 
+She created all the props and character designs. While she didn't write most of the code directly, she actively analyzed the code throughout the development process and helped identify and resolve errors. She primarily contributed to the written and explanatory aspects of the project, including the README file, which helped her gain a much deeper understanding of the codebase. Together, they brainstormed and developed the game's core concept and overall structure. 
 
 THEMES
-The main themes of this project are greed, consequence, and urgency within an ancient, mysterious environment. Inspired by "Tomb Raider"-type narratives, the game explores the idea that taking forbidden treasure unleashes danger. We plan on introducing this theme through an opening interaction with a treasure chest — a simple but symbolic choice that triggers the collapse of the temple. While the choice itself doesn’t branch into different outcomes, it acts as a catalyst for the game's core mechanic: survival under pressure.
+This theme encapsulates the fast-paced, adventure-driven elements of the game, where the player must navigate through increasingly challenging levels, dodge traps, and uncover hidden treasures. The sense of urgency and the thrill of discovery are central to the gameplay, pushing the player to think quickly, adapt, and explore their surroundings to survive and progress through the game.
 
 DESIGN
 The designs are quite simplistic to avoid the game becoming confusing. Mostly basic art it can even be considered as pixel art for the character and the background. 
 
 
 AESTHETIC DIMENSIONS
-We wanted to keep it as simple as possible so we could have focused on the coding prospect of it more. We were influenced by the example game in the lecture by its simple nature. As well as other games has been influential for us in the aesthetic choice such as Fireboy and Watergirl
+We wanted to keep it as simple as possible so we could have focused on the coding prospect of it more. We were influenced by early 2000 - 2010 such as 'Fireboy and Watergirl'and the early 'Tomb Raider' games.
 
 UNREALISED ASPECTS OF PROJECT
-If we had more time we would probably try to create a couple more levels and be more detailed or elobarative in the aesthetics of the game. But also being a group of two has put quite a significant amount of work on both of us since code writing or solving the errors has become quite stressful time to time with busy personal lives as well. 
+Being a group of only two placed a significant amount of pressure on both of us, especially when it came to writing code and solving bugs, which often became stressful alongside our busy personal lives. We had originally planned to add an extra level with a puzzle, where the player would collect various chest pieces in order to proceed, but due to time constraints and our limited coding experience, it was nearly impossible to implement. We also wanted to include more dialogue triggered by specific player actions—like opening a chest or taking a wrong turn—to add more depth and interactivity to the experience, but unfortunately, we couldn't fit it into our development timeframe. We also wanted to make each dialogue (both in game and potiental) have some sort of choice that impacts the ending of the game, but because of time constraints and inexperience, it was nearly impossible to make.
