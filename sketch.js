@@ -14,7 +14,6 @@ let tileSize = 50;
 let textures = [];
 
 // Level variables
-let levels = [openingScene, level1, level2];
 let currentLevel = 0;
 let graphicsMap;
 let tileRules;
@@ -28,6 +27,10 @@ let tomb;
 // Enemies for level1
 let enemyManager;
 
+// Statues
+let statues = []; 
+let statuerSprite; 
+
 // Global score variable
 let score = 0;
 
@@ -39,6 +42,8 @@ let enemySprite;
 // Dialogue
 let tombDialogue;
 let level1Dialogue;
+
+let gameWon = false; // Flag to check if the game is won
 
 // Levels, tilemaps, graphics, collision
 let openingScene = {
@@ -89,9 +94,8 @@ let level1= {
       [3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3], // 8
       [3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3], // 9
     
-      // 0 = stonepath
-      // 1 = bricks
       // 2 = void
+      // 3 = bricks
     ],
 
     tileRules: [
@@ -119,20 +123,19 @@ let level2 = {
     name: "LevelTwo",
     graphicsMap: [
     // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 0, 1, 2, 3, 4
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 0
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 1
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 2
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 3
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 4
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 5
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 6
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 7      
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 8
-      [5, 5, 5, 4, 4, 0, 0, 0, 0, 0, 4, 4, 5, 5, 5], // 9
+      [5, 5, 5, 4, 4, 6, 6, 6, 6, 6, 4, 4, 5, 5, 5], // 0
+      [5, 5, 5, 4, 4, 7, 7, 7, 7, 7, 4, 4, 5, 5, 5], // 1
+      [5, 5, 5, 4, 4, 6, 6, 6, 6, 6, 4, 4, 5, 5, 5], // 2
+      [5, 5, 5, 4, 4, 7, 7, 7, 7, 7, 4, 4, 5, 5, 5], // 3
+      [5, 5, 5, 4, 4, 6, 6, 6, 6, 6, 4, 4, 5, 5, 5], // 4
+      [5, 5, 5, 4, 4, 7, 7, 7, 7, 7, 4, 4, 5, 5, 5], // 5
+      [5, 5, 5, 4, 4, 6, 6, 6, 6, 6, 4, 4, 5, 5, 5], // 6
+      [5, 5, 5, 4, 4, 7, 7, 7, 7, 7, 4, 4, 5, 5, 5], // 7      
+      [5, 5, 5, 4, 4, 6, 6, 6, 6, 6, 4, 4, 5, 5, 5], // 8
+      [5, 5, 5, 4, 4, 7, 7, 7, 7, 7, 4, 4, 5, 5, 5], // 9
 
-      // 0 = stonepath
-      // 1 = bricks
-      // 2 = void
+      // 4 = brick wall
+      // 5 = void
     ],
 
     tileRules: [
@@ -156,23 +159,29 @@ let level2 = {
     startTileY: 0
 }
 
+let levels = [openingScene, level1, level2];
+
 function preload() {
   // Load your custom images
-  chestSprite = loadImage('IMGS/ chest.png'); 
-  tombSprite = loadImage('IMGS/ tomb2.png');   
+  chestSprite = loadImage('IMGS/chest.png'); 
+  tombSprite = loadImage('IMGS/tomb2.png');   
 
   // Tilemap imgs
-  textures[0] = loadImage('.png'); 
-  textures[1] = loadImage('.png'); 
-  textures[2] = loadImage('.png'); 
-  textures[3] = loadImage('.png'); 
-  textures[4] = loadImage('.png'); 
-  textures[5] = loadImage('.png'); 
+  textures[0] = loadImage('IMGS/Tilemap/stonepathway.png'); 
+  textures[1] = loadImage('IMGs/Tilemap/brickwall1.png'); 
+  textures[2] = loadImage('IMGs/Tilemap/void.png'); 
+  textures[3] = loadImage('IMGS/Tilemap/brickwall2.png'); 
+  textures[4] = loadImage('IMGS/Tilemap/brickwall3.png'); 
+  textures[5] = loadImage('IMGs/Tilemap/void.png'); 
+  textures[6] = loadImage('IMGS/Tilemap/stairpathway1.png');
+  textures[7] = loadImage('IMGS/Tilemap/stairpathway2.png')
 
   // Player sprite
-  playerSprite = loadImage('IMGS/ character.png'); 
+  playerSprite = loadImage('IMGS/character.png'); 
 
-  enemySprite = loadImage('IMGS/ bishop.png'); 
+  // Enemy and statue sprite
+  enemySprite = loadImage('IMGS/bishop.png'); 
+  statuerSprite = loadImage('IMGS/queen.png');
 
 }
 
@@ -218,8 +227,8 @@ function loadLevel() {
     for (let tileX = 0; tileX < tilesX; tileX++) {
         tileMap[tileX] = [];
         for (let tileY = 0; tileY < tilesY; tileY++) {
-            let texture = graphicsMap[tileY][tileX];
-            tileMap[tileX][tileY] = new Tile(texture[texture], tileX, tileY, tileSize, tileID);
+            let texture = textures[graphicsMap[tileY][tileX]]; 
+            tileMap[tileX][tileY] = new Tile(texture, tileX, tileY, tileSize, tileID);
             tileID++;
         }
     }
@@ -229,7 +238,7 @@ function loadLevel() {
         level1Dialogue.start();
     }
 
-    // Initialize other objects for LevelOne
+    // Initialize objects for LevelOne
     if (levels[currentLevel].name === "LevelOne") {
         createChests();
         enemyManager = new EnemyManager(enemySprite, tileSize, tileRules, player);
@@ -239,22 +248,49 @@ function loadLevel() {
             { x: 9, y: 7 }
         ]);
     } else {
-        chests = [];
+        chests = []; // Clear chests if not in LevelOne
+    }
+
+    if (levels[currentLevel].name === "LevelTwo") {
+        createStatues();
+    } else {
+        statues = []; // Clear statues if not in LevelTwo
     }
 
     if (levels[currentLevel].name === "OpeningScene") {
         createTomb();
     } else {
-        tomb = null;
+        tomb = null; // Clear tomb if not in OpeningScene
     }
 }
 
+function renderLevel() {
+    for (let tileX = 0; tileX < tilesX; tileX++) {
+        for (let tileY = 0; tileY < tilesY; tileY++) {
+            tileMap[tileX][tileY].display();
+        }
+    }
+
+    // Display statues
+    if (levels[currentLevel].name === "LevelTwo") {
+        for (let statue of statues) {
+            statue.display();
+            statue.update();
+            statue.checkCollisionWithPlayer(player);
+        }
+    }
+}
 
 function transitionToNextLevel() {
-    currentLevel = 1; // Transition to level1
+    currentLevel++; // Move to the next level
+    if (currentLevel >= levels.length) {
+        console.log("No more levels. Game Over.");
+        noLoop();
+        return;
+    }
     player.setPlayerPosition(); // Set the player's position for the new level
     loadLevel(); // Load the new level
-    console.log("Transitioned to Level 1");
+    console.log(`Transitioned to Level ${currentLevel + 1}`);
 }
 
 function showMenu(){
@@ -270,10 +306,27 @@ function showMenu(){
 function showInstructions(){
     fill(255);
     textSize(24);
-    text("Controls:", widthe / 2, height / 2 - 60);
+    text("Controls:", width / 2, height / 2 - 60);
     text("Use ARROW KEYS to move player", width / 2, height / 2 - 20);
     text("Use SPACE BAR to interact", width / 2, height / 2 + 20);
     text("Press 'B' to go back to main menu", width / 2, 550);
+}
+
+function checkWinCondition() {
+    if (levels[currentLevel].name === "LevelTwo" && player.tileY === 9) {
+        gameWon = true;
+        console.log("Player won the game!");
+        noLoop(); // Stop the game loop
+        return;
+    }
+}
+
+function displayWinScreen() {
+    background(0); // Black screen
+    fill(255); // White text
+    textSize(48);
+    textAlign(CENTER, CENTER);
+    text("YOU SURVIVED!", width / 2, height / 2); // Centered text
 }
 
 function draw() {
@@ -284,24 +337,44 @@ function draw() {
     } else if (currentScreen === 'instructions') {
         showInstructions();
     } else if (currentScreen === 'game') {
-        renderLevel();
+        if (gameWon) {
+            // Display winning screen
+            displayWinScreen();
+        } else {
+            renderLevel();
 
-        player.display();
-        player.move();
+            player.display();
+            player.move();
 
-        if (levels[currentLevel].name === "OpeningScene" && tomb) {
-            tomb.display();
-        }
+            // Check if the player wins the game
+            checkWinCondition();
 
-        // Display dialogues
-        if (tombDialogue.isActive) {
-            tombDialogue.display();
-        } else if (level1Dialogue.isActive) {
-            level1Dialogue.display();
+            if (levels[currentLevel].name === "OpeningScene" && tomb) {
+                tomb.display();
+            }
+
+            // Display dialogues
+            if (tombDialogue.isActive) {
+                tombDialogue.display();
+            } else if (level1Dialogue.isActive) {
+                level1Dialogue.display();
+            }
+
+            // Display statues in LevelTwo
+            if (levels[currentLevel].name === "LevelTwo") {
+                for (let statue of statues) {
+                    statue.display();
+                    statue.update();
+                    statue.checkCollisionWithPlayer(player);
+                }
+            }
         }
     }
 }
 
+function createTomb() {
+    tomb = new Tomb(tombSprite, 5, 5, 0, true);
+}
 function createChests(){
     // Clear existing chests before creating new ones
     chests = [];
@@ -317,8 +390,11 @@ function createChests(){
 
 }
 
-function createTomb() {
-    tomb = new Tomb(tombSprite, 5, 5, 0, true);
+function createStatues() {
+    statues = []; // Clear existing statues
+    statues.push(new Statue(statuerSprite, 3, 2, tileSize));
+    statues.push(new Statue(statuerSprite, 11, 4, tileSize));
+    statues.push(new Statue(statuerSprite, 3, 7, tileSize));
 }
 
 function keyPressed() {
@@ -371,7 +447,6 @@ class Player {
         this.ty = this.yPos;
 
         this.isMoving = false;
-        this.transition = false;
         this.speed = 5;
 
         this.tileSize = tileSize;
@@ -584,6 +659,39 @@ class Chests {
     }
 }
 
+class Enemy {
+    constructor(sprite, tileX, tileY, tileSize, tileRules, startX, startY, player) {
+        this.sprite = sprite;
+        this.tileX = tileX;
+        this.tileY = tileY;
+        this.tileSize = tileSize;
+        this.xPos = tileX * tileSize;
+        this.yPos = tileY * tileSize;
+        this.player = player;
+        this.speed = 2;
+    }
+
+    display() {
+        image(this.sprite, this.xPos, this.yPos, this.tileSize, this.tileSize);
+    }
+
+    move() {
+        // Movement logic for enemy (e.g., patrol or follow player)
+    }
+
+    checkCollisionWithPlayer() {
+        if (
+            this.player.xPos < this.xPos + this.tileSize &&
+            this.player.xPos + this.player.tileSize > this.xPos &&
+            this.player.yPos < this.yPos + this.tileSize &&
+            this.player.yPos + this.player.tileSize > this.yPos
+        ) {
+            console.log("Player hit by enemy! Game Over...");
+            noLoop(); // Stop the game loop to indicate game over
+        }
+    }
+}
+
 class EnemyManager {
     constructor(enemySprite, tileSize, tileRules, player) {
         this.enemySprite = enemySprite;
@@ -656,6 +764,53 @@ class Dialogue {
                 width / 2,
                 height - 100
             ); // Display current dialogue line
+        }
+    }
+}
+
+class Statue {
+    constructor(sprite, tileX, tileY, tileSize) {
+        this.sprite = sprite;
+        this.tileX = tileX;
+        this.tileY = tileY;
+        this.tileSize = tileSize;
+
+        this.xPos = tileX * tileSize;
+        this.yPos = tileY * tileSize;
+
+        this.falling = false; // Whether the statue is "falling"
+        this.speed = 5; // Falling speed
+    }
+
+    display() {
+        image(this.sprite, this.xPos, this.yPos, this.tileSize, this.tileSize);
+    }
+
+    update() {
+        if (this.falling) {
+            this.yPos += this.speed; // Statue "falls" by updating its y-position
+        }
+    }
+
+    checkCollisionWithPlayer(player) {
+        // Check if player is on the same X-axis as the statue
+        if (player.tileX === this.tileX && !this.falling) {
+            this.falling = true; // Start falling
+        }
+
+        // Check if statue collides with the player
+        if (this.falling && player.xPos < this.xPos + this.tileSize &&
+            player.xPos + player.tileSize > this.xPos &&
+            player.yPos < this.yPos + this.tileSize &&
+            player.yPos + player.tileSize > this.yPos) {
+            console.log("Player hit by statue! Game Over...");
+            noLoop(); // Stop the game loop to indicate game over
+        }
+
+        // Reset statue if it falls off the screen
+        if (this.yPos > height) {
+            this.falling = false;
+            this.yPos = this.tileY * this.tileSize; // Reset to original position
         }
     }
 }
